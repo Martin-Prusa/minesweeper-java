@@ -4,10 +4,14 @@ public class Minesweeper {
 
     private int rowsCount;
     private int columnsCount;
+    private GameField gameField;
+    private boolean loose = false;
+    private boolean win = false;
 
     public Minesweeper(int rows, int columns) {
         this.rowsCount = rows;
         this.columnsCount = columns;
+        this.gameField = new GameField(this.rowsCount, this.columnsCount);
     }
 
     /**
@@ -21,7 +25,7 @@ public class Minesweeper {
      * @return field type
      */
     public int getField(int x, int y) {
-        return 0;
+        return this.gameField.getCellState(x,y);
     }
 
     /**
@@ -35,6 +39,21 @@ public class Minesweeper {
      * @param y Y
      */
     public void toggleFieldState(int x, int y) {
+        int fState = gameField.getCellState(x, y);
+        if(fState != 1) {
+            if (fState == 0) fState = 2;
+            else if (fState < 3) {
+                fState++;
+            } else {
+                fState = 0;
+            }
+            gameField.setCellState(x, y, fState);
+        }
+        if(getRemainingBombCount() == 0) {
+            if(gameField.checkFlags()) {
+                win = true;
+            }
+        }
     }
 
     /**
@@ -44,6 +63,11 @@ public class Minesweeper {
      * @param y Y
      */
     public void reveal(int x, int y) {
+        if (isBombOnPosition(x,y)) loose = true;
+        else {
+            gameField.setCellState(x, y, 1);
+            loose = false;
+        }
     }
 
     /**
@@ -54,7 +78,7 @@ public class Minesweeper {
      * @return number of adjacent bombs
      */
     public int getAdjacentBombCount(int x, int y) {
-        return 0;
+        return gameField.getAdjacentBombCount(x,y);
     }
 
     /**
@@ -65,7 +89,7 @@ public class Minesweeper {
      * @return true if bomb on position
      */
     public boolean isBombOnPosition(int x, int y) {
-        return false;
+        return gameField.isCellBomb(x,y);
     }
 
     /**
@@ -74,7 +98,7 @@ public class Minesweeper {
      * @return bomb count
      */
     public int getBombCount() {
-        return 0;
+        return gameField.getBombCount();
     }
 
     /**
@@ -83,7 +107,7 @@ public class Minesweeper {
      * @return remaining bomb count
      */
     public int getRemainingBombCount() {
-        return 0;
+        return gameField.getRemainingBombCount();
     }
 
     /**
@@ -92,7 +116,7 @@ public class Minesweeper {
      * @return if player won
      */
     public boolean didWin() {
-        return false;
+        return this.win;
     }
 
     /**
@@ -101,7 +125,7 @@ public class Minesweeper {
      * @return if player lost
      */
     public boolean didLoose() {
-        return false;
+        return this.loose;
     }
 
     public int getRows() {
