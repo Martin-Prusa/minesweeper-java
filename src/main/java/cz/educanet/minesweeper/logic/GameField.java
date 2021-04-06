@@ -1,10 +1,11 @@
 package cz.educanet.minesweeper.logic;
 
+
 public class GameField {
 
     private Cell[][] gameField;
 
-    public GameField(int rows, int columns) {
+    public GameField(int rows, int columns, int bombCount) {
         this.gameField = new Cell[columns][rows];
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
@@ -13,10 +14,21 @@ public class GameField {
         }
         getAdjacentBombCount(1,1);
 
-        gameField[1][1].setBomb(true);
-        gameField[1][2].setBomb(true);
-        gameField[10][10].setBomb(true);
+        for (int i = 0; i < bombCount; i++) {
+            generateBombs(rows, columns);
+        }
     }
+    public void generateBombs(int rows, int columns) {
+        int randomX = (int) Math.floor(Math.random()*rows);
+        int randomY = (int) Math.floor(Math.random()*columns);
+        if(!gameField[randomY][randomX].isBomb()) {
+            gameField[randomY][randomX].setBomb(true);
+            System.out.println(randomX+"<-x  y->"+randomY);
+            return;
+        }
+        generateBombs(rows, columns);
+    }
+
     public int getCellState(int x, int y) {
         return gameField[x][y].getFieldState();
     }
@@ -36,7 +48,7 @@ public class GameField {
             for (int j = -1; j < 2; j++) {
                 int x1 = x + i;
                 int y1 = y + j;
-                if(!(x1 < 0 || y1 < 0 || x1>gameField.length-1 || y1 > gameField[0].length-1) && (x1 != 0 && y1 != 0) && isCellBomb(x1, y1)) {
+                if(!(x1 < 0 || y1 < 0 || x1>gameField.length-1 || y1 > gameField[0].length-1) && isCellBomb(x1, y1)) {
                     count++;
                 }
             }

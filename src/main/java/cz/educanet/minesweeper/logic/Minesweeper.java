@@ -11,14 +11,14 @@ public class Minesweeper {
     public Minesweeper(int rows, int columns) {
         this.rowsCount = rows;
         this.columnsCount = columns;
-        this.gameField = new GameField(this.rowsCount, this.columnsCount);
+        this.gameField = new GameField(this.rowsCount, this.columnsCount, 30);
     }
 
     /*
-     * TODO: Nahodna generace bomb
      * TODO: Konce
      * TODO: Otazniky
      * TODO: Vice praporu nez bomb
+     * TODO: Overovani na krajich
      * */
 
 
@@ -80,7 +80,7 @@ public class Minesweeper {
                         int x1 = x + i;
                         int y1 = y + j;
                         if(!(x1 <= -1 || y1 <= -1 || x1>getColumns()-1 || y1 > getRows()-1)) {
-                            if(gameField.getCellState(x1, y1) !=1) {
+                            if(gameField.getCellState(x1, y1) !=1 && !gameField.isCellBomb(x1, y1)) {
                                 reveal(x1,y1);
                             }
                         }
