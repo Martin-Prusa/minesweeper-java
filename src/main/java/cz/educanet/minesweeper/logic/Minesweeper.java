@@ -14,6 +14,14 @@ public class Minesweeper {
         this.gameField = new GameField(this.rowsCount, this.columnsCount);
     }
 
+    /*
+     * TODO: Nahodna generace bomb
+     * TODO: Konce
+     * TODO: Otazniky
+     * TODO: Vice praporu nez bomb
+     * */
+
+
     /**
      * 0 - Hidden
      * 1 - Visible
@@ -66,7 +74,19 @@ public class Minesweeper {
         if (isBombOnPosition(x,y)) loose = true;
         else {
             gameField.setCellState(x, y, 1);
-            loose = false;
+            if(getAdjacentBombCount(x,y) == 0) {
+                for (int i = -1; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        int x1 = x + i;
+                        int y1 = y + j;
+                        if(!(x1 <= -1 || y1 <= -1 || x1>getColumns()-1 || y1 > getRows()-1)) {
+                            if(gameField.getCellState(x1, y1) !=1) {
+                                reveal(x1,y1);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

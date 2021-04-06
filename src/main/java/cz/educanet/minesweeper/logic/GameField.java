@@ -15,6 +15,7 @@ public class GameField {
 
         gameField[1][1].setBomb(true);
         gameField[1][2].setBomb(true);
+        gameField[10][10].setBomb(true);
     }
     public int getCellState(int x, int y) {
         return gameField[x][y].getFieldState();
@@ -28,7 +29,6 @@ public class GameField {
         gameField[x][y].setFieldState(state);
     }
 
-    //TODO: This
     public int getAdjacentBombCount(int x, int y) {
         int count = 0;
 
