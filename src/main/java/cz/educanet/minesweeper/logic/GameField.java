@@ -23,7 +23,7 @@ public class GameField {
         int randomY = (int) Math.floor(Math.random()*columns);
         if(!gameField[randomY][randomX].isBomb()) {
             gameField[randomY][randomX].setBomb(true);
-            System.out.println(randomX+"<-x  y->"+randomY);
+//            System.out.println(randomX+"<-x  y->"+randomY);
             return;
         }
         generateBombs(rows, columns);

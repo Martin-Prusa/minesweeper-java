@@ -18,7 +18,6 @@ public class Minesweeper {
      * TODO: Konce
      * TODO: Otazniky
      * TODO: Vice praporu nez bomb
-     * TODO: Overovani na krajich
      * */
 
 
