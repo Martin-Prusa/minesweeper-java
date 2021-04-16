@@ -70,6 +70,7 @@ public class Minesweeper {
      * @param y Y
      */
     public void reveal(int x, int y) {
+        if(gameField.getCellState(x,y) == 2) return;
         if (isBombOnPosition(x,y)) loose = true;
         else {
             gameField.setCellState(x, y, 1);
